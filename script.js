@@ -1,18 +1,15 @@
-// JavaScript for functional buttons and cart
 document.addEventListener('DOMContentLoaded', function() {
   const cart = document.getElementById('cart');
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
   const checkoutBtn = document.getElementById('checkout-btn');
   const cartToggle = document.querySelector('.cart-toggle');
-  let cartData = {}; // Object to hold item names and quantities
+  let cartData = {}; 
 
-  // Toggle cart visibility
   cartToggle.addEventListener('click', function() {
     cart.classList.toggle('open');
   });
 
-  // Function to update cart display
   function updateCart() {
     cartItems.innerHTML = '';
     let total = 0;
@@ -30,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     cartTotal.textContent = total.toFixed(2);
   }
 
-  // Add to cart functionality
   document.querySelectorAll('.order-btn').forEach(button => {
     button.addEventListener('click', function() {
       const name = this.getAttribute('data-name');
@@ -41,12 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
         cartData[name] = { quantity: 1, price: price };
       }
       updateCart();
-      cart.classList.add('open'); // Open cart when item is added
+      cart.classList.add('open'); 
       alert(`${name} added to cart!`);
     });
   });
 
-  // Remove from cart functionality
   cartItems.addEventListener('click', function(e) {
     if (e.target.classList.contains('remove-btn')) {
       const name = e.target.getAttribute('data-name');
@@ -55,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Checkout functionality
   checkoutBtn.addEventListener('click', function() {
     if (Object.keys(cartData).length === 0) {
       alert('Your cart is empty!');
@@ -64,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Payment modal functionality
   const paymentModal = document.getElementById('payment-modal');
   const closeModal = document.getElementById('close-modal');
   const paymentForm = document.getElementById('payment-form');
@@ -75,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const cashPaymentFields = document.getElementById('cash-payment-fields');
 
   function openPaymentModal() {
-    // Populate order summary
     const paymentOrderItems = document.getElementById('payment-order-items');
     const paymentTotal = document.getElementById('payment-total');
     paymentOrderItems.innerHTML = '';
@@ -95,14 +87,12 @@ document.addEventListener('DOMContentLoaded', function() {
     paymentModal.classList.remove('show');
   });
 
-  // Close modal when clicking outside
   paymentModal.addEventListener('click', function(e) {
     if (e.target === paymentModal) {
       paymentModal.classList.remove('show');
     }
   });
 
-  // Payment mode change
   paymentMode.addEventListener('change', function() {
     const mode = this.value;
     paymentMethodContainer.style.display = 'none';
@@ -127,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Payment method change
   paymentMethod.addEventListener('change', function() {
     const method = this.value;
     onlinePaymentFields.style.display = 'none';
@@ -139,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('cvv').required = true;
       document.getElementById('cardholder-name').required = true;
     } else if (method === 'paypal' || method === 'gcash' || method === 'maya') {
-      // For other methods, just show confirmation
       document.getElementById('card-number').required = false;
       document.getElementById('expiry-date').required = false;
       document.getElementById('cvv').required = false;
@@ -147,14 +135,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Input validation handlers
   const cardNumberInput = document.getElementById('card-number');
   const expiryDateInput = document.getElementById('expiry-date');
   const cvvInput = document.getElementById('cvv');
   const cardholderNameInput = document.getElementById('cardholder-name');
   const customerNameInput = document.getElementById('customer-name');
 
-  // Card number: only digits and auto-format with spaces
   cardNumberInput.addEventListener('input', function(e) {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length > 16) value = value.slice(0, 16);
@@ -162,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
     e.target.value = formattedValue;
   });
 
-  // Validate card number on blur
   cardNumberInput.addEventListener('blur', function(e) {
     const value = e.target.value.replace(/\D/g, '');
     if (value.length < 13 || value.length > 16) {
@@ -172,7 +157,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Expiry date: format as MM/YY
   expiryDateInput.addEventListener('input', function(e) {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length >= 2) {
@@ -181,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
     e.target.value = value;
   });
 
-  // Validate expiry date on blur
   expiryDateInput.addEventListener('blur', function(e) {
     const value = e.target.value;
     if (value.length === 5) {
@@ -205,22 +188,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // CVV: only digits
   cvvInput.addEventListener('input', function(e) {
     e.target.value = e.target.value.replace(/\D/g, '');
   });
 
-  // Cardholder name: only letters, spaces, hyphens, and dots
   cardholderNameInput.addEventListener('input', function(e) {
     e.target.value = e.target.value.replace(/[^A-Za-z\s\-\.]/g, '');
   });
 
-  // Customer name: only letters, spaces, hyphens, and dots
   customerNameInput.addEventListener('input', function(e) {
     e.target.value = e.target.value.replace(/[^A-Za-z\s\-\.]/g, '');
   });
 
-  // Form submission
   paymentForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -243,7 +222,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     alert(message + '\n\nThank you for your order!');
     
-    // Reset everything
     cartData = {};
     updateCart();
     cart.classList.remove('open');
