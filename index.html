@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kape-fè</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header role="banner">
+    <h1>🍵 Kape-fè</h1>
+    <p>Brew Bold. Live Bold.</p>
+    <img src="images/logo2.png" alt="Kape-fè Logo" id="logo"/>
+  </header>
+
+  <nav role="navigation" aria-label="Main navigation">
+    <a href="#home" aria-label="Go to Home section">Home</a>
+    <a href="#menu" aria-label="Go to Menu section">Menu</a>
+    <a href="#about" aria-label="Go to About section">About</a>
+    <a href="#contact" aria-label="Go to Contact section">Contact</a>
+  </nav>
+
+  <button class="cart-toggle" aria-label="Toggle cart">🛒</button>
+
+  <div class="cart" id="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total">Total: $<span id="cart-total">0.00</span></div>
+    <button class="checkout-btn" id="checkout-btn">Checkout</button>
+  </div>
+
+  <div class="payment-modal" id="payment-modal">
+    <div class="payment-content">
+      <button class="close-modal" id="close-modal" aria-label="Close payment modal">&times;</button>
+      <h2>Payment Details</h2>
+      
+      <form id="payment-form">
+        <div class="form-group">
+          <label for="payment-mode">Payment Mode:</label>
+          <select id="payment-mode" name="payment-mode" required>
+            <option value="">Select Mode</option>
+            <option value="online">Online Payment</option>
+            <option value="cash">Cash on Pickup</option>
+          </select>
+        </div>
+
+        <div id="payment-method-container" style="display: none;">
+          <div class="form-group">
+            <label for="payment-method">Payment Method:</label>
+            <select id="payment-method" name="payment-method">
+              <option value="">Select Method</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="online-payment-fields" style="display: none;">
+          <div class="form-group">
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" maxlength="23" inputmode="numeric">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expiry-date">Expiry Date:</label>
+              <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" maxlength="5" inputmode="numeric">
+            </div>
+            <div class="form-group">
+              <label for="cvv">CVV:</label>
+              <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" pattern="\d{3,4}" inputmode="numeric">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cardholder-name">Cardholder Name:</label>
+            <input type="text" id="cardholder-name" name="cardholder-name" placeholder="John Doe" pattern="[A-Za-z\s\-\.]+" minlength="2">
+          </div>
+        </div>
+
+        <div id="cash-payment-fields" style="display: none;">
+          <div class="form-group">
+            <label for="customer-name">Your Name:</label>
+            <input type="text" id="customer-name" name="customer-name" placeholder="Enter your name" pattern="[A-Za-z\s\-\.]+" minlength="2">
+          </div>
+          <div class="form-group">
+            <label for="pickup-time">Pickup Time:</label>
+            <input type="time" id="pickup-time" name="pickup-time">
+          </div>
+        </div>
+
+        <div class="payment-summary">
+          <h3>Order Summary</h3>
+          <div id="payment-order-items"></div>
+          <div class="payment-total">Total Amount: $<span id="payment-total">0.00</span></div>
+        </div>
+
+        <button type="submit" class="confirm-payment-btn">Confirm Payment</button>
+      </form>
+    </div>
+  </div>
+
+  <section class="hero" id="home" tabindex="0">
+    <h1>Welcome to Kape-fè</h1>
+    <p>A bad day with coffee is better than a good day without it.</p>
+  </section>
+
+  <section class="section" id="menu" tabindex="0">
+    <font size="5"><h1>Our Menu</h1></font>
+    <font size="10"><h2>Beverages</h2></font>
+    <div class="menu-items">
+
+      <div class="card" role="region" aria-labelledby="espresso-title">
+        <img
+          src="images/espresso2.jpg"
+          alt="Espresso cup with crema"
+        />
+        <h3 id="espresso-title">Espresso</h3>
+        <p>Rich and bold shot of pure coffee.</p>
+        <p><strong>$3.00</strong></p>
+        <button class="order-btn" data-name="Espresso" data-price="3.00" aria-label="Order Espresso">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="latte-title">
+        <img
+          src="images/latte.jpg"
+          alt="Latte art in a white cup"
+        />
+        <h3 id="latte-title">Latte</h3>
+        <p>Spiced tea with steamed milk for a cozy experience.</p>
+        <p><strong>$3.50</strong></p>
+        <button class="order-btn" data-name="Latte" data-price="3.50" aria-label="Order Latte">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="cappuccino-title">
+        <img
+          src="images/cappuccino.jpg"
+          alt="Cappuccino with milk foam"
+        />
+        <h3 id="cappuccino-title">Cappuccino</h3>
+        <p>Perfect mix of espresso, milk, and foam.</p>
+        <p><strong>$4.00</strong></p>
+        <button class="order-btn" data-name="Cappuccino" data-price="4.00" aria-label="Order Cappuccino">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="frappuccino-title">
+        <img
+          src="images/Frappuccino.jpg"
+          alt=""
+        />
+        <h3 id="frappuccino-title">Frappuccino</h3>
+        <p>A foamy, creamy delicious drink.</p>
+        <p><strong>$4.50</strong></p>
+        <button class="order-btn" data-name="Frappuccino" data-price="4.50" aria-label="Order Frappuccino">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="brown-sugar-shaken-espresso-title">
+        <img
+          src="images/BrownSugarShakenEspresso.jpg"
+          alt=""
+        />
+        <h3 id="brown-sugar-shaken-espresso-title">Brown Sugar Shaken Espresso</h3>
+        <p>A lightly sweet and creamy flavor, a foamy texture, and a rich espresso finish.</p>
+        <p><strong>$5.00</strong></p>
+        <button class="order-btn" data-name="Brown Sugar Shaken Espresso" data-price="5.00" aria-label="Order Brown Sugar Shaken Espresso">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="caramel-hazelnut-iced-coffee-title">
+        <img
+          src="Images/CaramelHazelnutIcedCoffee.jpg"
+          alt=""
+        />
+        <h3 id="caramel-hazelnut-iced-coffee-title">Caramel Hazelnut Iced Coffee</h3>
+        <p>A flavorful coffee drink to start your day.</p>
+        <p><strong>$5.50</strong></p>
+        <button class="order-btn" data-name="Caramel Hazelnut Iced Coffee" data-price="5.50" aria-label="Order Caramel Hazelnut Iced Coffee">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="iced-caramel-macchiato-title">
+        <img
+          src="images/IcedCaramelMacchiatio.jpg"
+          alt=""
+        />
+        <h3 id="iced-caramel-macchiato-title">Iced Caramel Macchiato</h3>
+        <p>Sweet coffee drink with a layered appearance.</p>
+        <p><strong>$6.00</strong></p>
+        <button class="order-btn" data-name="Iced Caramel Macchiato" data-price="6.00" aria-label="Order Iced Caramel Macchiato">Order Now</button>
+      </div>
+    </div>
+
+    <font size="10"><h2>Pastries</h2></font>
+        <div class="menu-items">
+
+      <div class="card" role="region" aria-labelledby="blueberry-swirl-cheesecake-roll-title">
+        <img
+          src="images/blueberry.jpg"
+          alt=""
+        />
+        <h3 id="blueberry-swirl-cheesecake-roll-title">Blueberry Swirl Cheesecake Roll</h3>
+        <p>A delightful treat that combines the creamy richness of cheesecake with the sweet tang of fresh blueberries.</p>
+        <p><strong>$3.00</strong></p>
+        <button class="order-btn" data-name="Blueberry Swirl Cheesecake Roll" data-price="3.00" aria-label="Order Blueberry Swirl Cheesecake Roll">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="mocha-brownie-icecream-cake-title">
+        <img
+          src="images/Mocha.jpg"
+          alt=""
+        />
+        <h3 id="mocha-brownie-icecream-cake-title">Mocha Brownie Icecream Cake</h3>
+        <p>Layers of delicious brownie, coffee cream cheese, coffee ice cream, and whipped topping.</p>
+        <p><strong>$3.50</strong></p>
+        <button class="order-btn" data-name="Mocha Brownie Icecream Cake" data-price="3.50" aria-label="Order Mocha Brownie Icecream Cake">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="croissant-title">
+        <img
+          src="images/croissant2.jpg"
+          alt="Cappuccino with milk foam"
+        />
+        <h3 id="croissant-title">Croissant</h3>
+        <p>Croissant dough begins with butter, flour, sugar, salt, yeast, and milk.</p>
+        <p><strong>$4.00</strong></p>
+        <button class="order-btn" data-name="Croissant" data-price="4.00" aria-label="Order Croissant">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="pistachio-cake-title">
+        <img
+          src="images/pistachio.jpg"
+          alt=""
+        />
+        <h3 id="pistachio-cake-title">Pistachio Cake</h3>
+        <p>A soft, moist crumb that actually tastes of pistachios.</p>
+        <p><strong>$4.50</strong></p>
+        <button class="order-btn" data-name="Pistachio Cake" data-price="4.50" aria-label="Order Pistachio Cake">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="tiramisu-cake-title">
+        <img
+          src="images/tiramisu.jpg"
+          alt=""
+        />
+        <h3 id="tiramisu-cake-title">Tiramisu Cake</h3>
+        <p>A soft, creamy, and rich, and it's got a toasty, warm flavor from the coffee and alcohol.</p>
+        <p><strong>$5.00</strong></p>
+        <button class="order-btn" data-name="Tiramisu Cake" data-price="5.00" aria-label="Order Tiramisu Cake">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="japanese-cake-roll-title">
+        <img
+          src="Images/japanese2.jpg"
+          alt=""
+        />
+        <h3 id="japanese-cake-roll-title">Japanese Cake Roll</h3>
+        <p>Made with a light and airy chiffon cake base and filled with an even lighter whipped cream.</p>
+        <p><strong>$5.50</strong></p>
+        <button class="order-btn" data-name="Japanese Cake Roll" data-price="5.50" aria-label="Japanese Cake Roll">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="kababayan-bread-title">
+        <img
+          src="images/kababayan.jpg"
+          alt=""
+        />
+        <h3 id="kababayan-bread-title">Kababayan Bread</h3>
+        <p>a Filipino bread with a distinct salakot shape and yellow color.</p>
+        <p><strong>$6.00</strong></p>
+        <button class="order-btn" data-name="Kababayan Bread" data-price="6.00" aria-label="Order Kababayan Bread">Order Now</button>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="kimberly-jane-ringal-title">
+        <img
+          src="images/k.png"
+          alt=""
+        />
+        <h3 id="kimberly-jane-ringal-title">Kimberly Jane Ringal</h3>
+        <p>The Ones I Once Loved. - Steve</p>
+        <p><strong>$143.00</strong></p>
+        <button class="order-btn" data-name="Kimberly Jane Ringal" data-price="143.00" aria-label="Kimberly Jane Ringal">Order Now</button>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="section" id="about" tabindex="0">
+    <h2>About Us</h2>
+    <p>
+      At Kape-fè, we believe coffee is more than a drink—it’s an experience.
+    <p>
+    <p>
+      Our beans are sourced ethically and roasted to perfection.
+    </p>
+    <p>
+      Every cup tells a story of passion and quality.
+    </p>
+  </section>
+
+  <section class="section" id="contact" tabindex="0">
+    <h2>Contact Us</h2>
+    <p>
+      Email:
+      <a href="mailto:info@kape-fe.com" aria-label="Email Kape-fè"
+        >info@kape-fe.com</a
+      >
+    </p>
+    <p>
+      Phone:
+      <a href="tel:+639876543210" aria-label="Call Kape-fè"
+        >+63 987 654 3210</a
+      >
+    </p>
+    <p>Location: 456 Coffee Lane, Bean City</p>
+  </section>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 Kape-fè. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
