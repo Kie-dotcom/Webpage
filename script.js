@@ -117,23 +117,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  paymentMethod.addEventListener('change', function() {
-    const method = this.value;
-    onlinePaymentFields.style.display = 'none';
-    
-    if (method === 'credit-card' || method === 'debit-card') {
-      onlinePaymentFields.style.display = 'block';
-      document.getElementById('card-number').required = true;
-      document.getElementById('expiry-date').required = true;
-      document.getElementById('cvv').required = true;
-      document.getElementById('cardholder-name').required = true;
-    } else if (method === 'paypal' || method === 'gcash' || method === 'maya') {
-      document.getElementById('card-number').required = false;
-      document.getElementById('expiry-date').required = false;
-      document.getElementById('cvv').required = false;
-      document.getElementById('cardholder-name').required = false;
-    }
-  });
+paymentMethod.addEventListener('change', function() {
+  const method = this.value;
+  onlinePaymentFields.style.display = 'none';
+
+  document.getElementById('card-number').required = false;
+  document.getElementById('expiry-date').required = false;
+  document.getElementById('cvv').required = false;
+  document.getElementById('cardholder-name').required = false;
+
+  document.getElementById('alt-name-field').style.display = 'none';
+  document.getElementById('mobile-number-field').style.display = 'none';
+
+  if (method === 'credit-card' || method === 'debit-card') {
+    onlinePaymentFields.style.display = 'block';
+    document.getElementById('card-number').required = true;
+    document.getElementById('expiry-date').required = true;
+    document.getElementById('cvv').required = true;
+    document.getElementById('cardholder-name').required = true;
+
+  } else if (method === 'paypal' || method === 'gcash' || method === 'maya') {
+    document.getElementById('alt-name-field').style.display = 'block';
+    document.getElementById('mobile-number-field').style.display = 'block';
+    document.getElementById('alt-name').required = true;
+    document.getElementById('mobile-number').required = true;
+  }
+});
+
 
   const cardNumberInput = document.getElementById('card-number');
   const expiryDateInput = document.getElementById('expiry-date');
@@ -156,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.target.setCustomValidity('');
     }
   });
+
 
   expiryDateInput.addEventListener('input', function(e) {
     let value = e.target.value.replace(/\D/g, '');
@@ -200,35 +211,104 @@ document.addEventListener('DOMContentLoaded', function() {
     e.target.value = e.target.value.replace(/[^A-Za-z\s\-\.]/g, '');
   });
 
-  paymentForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const mode = paymentMode.value;
-    const method = paymentMethod.value;
-    const total = cartTotal.textContent;
-    
-    let message = '';
-    if (mode === 'online') {
-      if (method === 'credit-card' || method === 'debit-card') {
-        message = `Payment successful via ${method.replace('-', ' ').toUpperCase()}!\nTotal: $${total}`;
-      } else {
-        message = `Payment will be processed via ${method.toUpperCase()}.\nTotal: $${total}`;
-      }
-    } else if (mode === 'cash') {
-      const customerName = document.getElementById('customer-name').value;
-      const pickupTime = document.getElementById('pickup-time').value;
-      message = `Order confirmed for ${customerName}!\nCash on Pickup\nPickup Time: ${pickupTime}\nTotal: $${total}`;
+paymentForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const mode = paymentMode.value;
+  const method = paymentMethod.value;
+  const total = cartTotal.textContent;
+
+  let message = '';
+  if (mode === 'online') {
+    if (method === 'credit-card' || method === 'debit-card') {
+      message = `Payment successful via ${method.replace('-', ' ').toUpperCase()}!\nTotal: $${total}`;
+    } else if (method === 'paypal' || method === 'gcash' || method === 'maya') {
+      const altName = altNameInput.value;
+      const mobileNumber = mobileNumberInput.value;
+      message = `Payment will be processed via ${method.toUpperCase()}.\nName: ${altName}\nMobile: ${mobileNumber}\nTotal: $${total}`;
     }
-    
-    alert(message + '\n\nThank you for your order!');
-    
-    cartData = {};
-    updateCart();
-    cart.classList.remove('open');
-    paymentModal.classList.remove('show');
-    paymentForm.reset();
-    paymentMethodContainer.style.display = 'none';
-    onlinePaymentFields.style.display = 'none';
-    cashPaymentFields.style.display = 'none';
-  });
+  } else if (mode === 'cash') {
+    const customerName = document.getElementById('customer-name').value;
+    const pickupTime = document.getElementById('pickup-time').value;
+    message = `Order confirmed for ${customerName}!\nCash on Pickup\nPickup Time: ${pickupTime}\nTotal: $${total}`;
+  }
+
+  alert(message + '\n\nThank you for your order!');
+
+  cartData = {};
+  updateCart();
+  cart.classList.remove('open');
+  paymentModal.classList.remove('show');
+  paymentForm.reset();
+  paymentMethodContainer.style.display = 'none';
+  onlinePaymentFields.style.display = 'none';
+  cashPaymentFields.style.display = 'none';
+  document.getElementById('alt-name-field').style.display = 'none';
+  document.getElementById('mobile-number-field').style.display = 'none';
+});
+
+
+function updateCart() {
+  cartItems.innerHTML = '';
+  let total = 0;
+  for (const [name, { quantity, price }] of Object.entries(cartData)) {
+    const itemTotal = quantity * price;
+    total += itemTotal;
+
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'cart-item';
+    itemDiv.innerHTML = `
+      <span>${name} (x${quantity}) - $${itemTotal.toFixed(2)}</span>
+      <div class="cart-controls">
+        <button class="decrement-btn" data-name="${name}">-</button>
+        <button class="increment-btn" data-name="${name}">+</button>
+        <button class="remove-btn" data-name="${name}">Remove</button>
+      </div>
+    `;
+    cartItems.appendChild(itemDiv);
+  }
+  cartTotal.textContent = total.toFixed(2);
+}
+
+cartItems.addEventListener('click', function(e) {
+  const name = e.target.getAttribute('data-name');
+  if (!name) return;
+
+  if (e.target.classList.contains('increment-btn')) {
+    cartData[name].quantity += 1;
+  } else if (e.target.classList.contains('decrement-btn')) {
+    cartData[name].quantity -= 1;
+    if (cartData[name].quantity <= 0) {
+      delete cartData[name];
+    }
+  } else if (e.target.classList.contains('remove-btn')) {
+    delete cartData[name];
+  }
+  updateCart();
+});
+
+const altNameInput = document.getElementById('alt-name');
+const mobileNumberInput = document.getElementById('mobile-number');
+
+altNameInput.addEventListener('input', function(e) {
+  e.target.value = e.target.value.replace(/[^A-Za-z\s\-\.]/g, '');
+});
+
+mobileNumberInput.addEventListener('input', function(e) {
+
+  e.target.value = e.target.value.replace(/\D/g, '');
+
+  if (e.target.value.length > 11) {
+    e.target.value = e.target.value.slice(0, 11);
+  }
+});
+
+mobileNumberInput.addEventListener('blur', function(e) {
+  if (e.target.value.length !== 11) {
+    e.target.setCustomValidity('Mobile number must be exactly 11 digits');
+  } else {
+    e.target.setCustomValidity('');
+  }
+});
+
 });
