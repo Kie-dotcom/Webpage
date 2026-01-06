@@ -25,7 +25,7 @@
   <div class="cart" id="cart">
     <h2>Your Cart</h2>
     <div id="cart-items"></div>
-    <div class="cart-total">Total: $<span id="cart-total">0.00</span></div>
+    <div class="cart-total">Total: ₱<span id="cart-total">0.00</span></div>
     <button class="checkout-btn" id="checkout-btn">Checkout</button>
   </div>
 
@@ -43,6 +43,17 @@
             <option value="cash">Cash on Pickup</option>
           </select>
         </div>
+
+        <div id="alt-name-field" class="form-group" style="display:none;">
+  <label for="alt-name">Name</label>
+  <input type="text" id="alt-name" name="alt-name" placeholder="Enter your name" />
+</div>
+
+<div id="mobile-number-field" class="form-group" style="display:none;">
+  <label for="mobile-number">Mobile Number</label>
+  <input type="text" id="mobile-number" name="mobile-number" placeholder="Enter mobile number" />
+</div>
+
 
         <div id="payment-method-container" style="display: none;">
           <div class="form-group">
@@ -88,7 +99,7 @@
         <div class="payment-summary">
           <h3>Order Summary</h3>
           <div id="payment-order-items"></div>
-          <div class="payment-total">Total Amount: $<span id="payment-total">0.00</span></div>
+          <div class="payment-total">Total Amount: ₱<span id="payment-total">0.00</span></div>
         </div>
 
         <button type="submit" class="confirm-payment-btn">Confirm Payment</button>
@@ -113,7 +124,7 @@
         />
         <h3 id="espresso-title">Espresso</h3>
         <p>Rich and bold shot of pure coffee.</p>
-        <p><strong>$3.00</strong></p>
+        <p><strong>₱3.00</strong></p>
         <button class="order-btn" data-name="Espresso" data-price="3.00" aria-label="Order Espresso">Order Now</button>
       </div>
 
@@ -124,7 +135,7 @@
         />
         <h3 id="latte-title">Latte</h3>
         <p>Spiced tea with steamed milk for a cozy experience.</p>
-        <p><strong>$3.50</strong></p>
+        <p><strong>₱3.50</strong></p>
         <button class="order-btn" data-name="Latte" data-price="3.50" aria-label="Order Latte">Order Now</button>
       </div>
 
@@ -135,7 +146,7 @@
         />
         <h3 id="cappuccino-title">Cappuccino</h3>
         <p>Perfect mix of espresso, milk, and foam.</p>
-        <p><strong>$4.00</strong></p>
+        <p><strong>₱4.00</strong></p>
         <button class="order-btn" data-name="Cappuccino" data-price="4.00" aria-label="Order Cappuccino">Order Now</button>
       </div>
 
@@ -146,7 +157,7 @@
         />
         <h3 id="frappuccino-title">Frappuccino</h3>
         <p>A foamy, creamy delicious drink.</p>
-        <p><strong>$4.50</strong></p>
+        <p><strong>₱4.50</strong></p>
         <button class="order-btn" data-name="Frappuccino" data-price="4.50" aria-label="Order Frappuccino">Order Now</button>
       </div>
 
@@ -157,7 +168,7 @@
         />
         <h3 id="brown-sugar-shaken-espresso-title">Brown Sugar Shaken Espresso</h3>
         <p>A lightly sweet and creamy flavor, a foamy texture, and a rich espresso finish.</p>
-        <p><strong>$5.00</strong></p>
+        <p><strong>₱5.00</strong></p>
         <button class="order-btn" data-name="Brown Sugar Shaken Espresso" data-price="5.00" aria-label="Order Brown Sugar Shaken Espresso">Order Now</button>
       </div>
 
@@ -168,7 +179,7 @@
         />
         <h3 id="caramel-hazelnut-iced-coffee-title">Caramel Hazelnut Iced Coffee</h3>
         <p>A flavorful coffee drink to start your day.</p>
-        <p><strong>$5.50</strong></p>
+        <p><strong>₱5.50</strong></p>
         <button class="order-btn" data-name="Caramel Hazelnut Iced Coffee" data-price="5.50" aria-label="Order Caramel Hazelnut Iced Coffee">Order Now</button>
       </div>
 
@@ -179,7 +190,7 @@
         />
         <h3 id="iced-caramel-macchiato-title">Iced Caramel Macchiato</h3>
         <p>Sweet coffee drink with a layered appearance.</p>
-        <p><strong>$6.00</strong></p>
+        <p><strong>₱6.00</strong></p>
         <button class="order-btn" data-name="Iced Caramel Macchiato" data-price="6.00" aria-label="Order Iced Caramel Macchiato">Order Now</button>
       </div>
     </div>
@@ -194,7 +205,7 @@
         />
         <h3 id="blueberry-swirl-cheesecake-roll-title">Blueberry Swirl Cheesecake Roll</h3>
         <p>A delightful treat that combines the creamy richness of cheesecake with the sweet tang of fresh blueberries.</p>
-        <p><strong>$3.00</strong></p>
+        <p><strong>₱3.00</strong></p>
         <button class="order-btn" data-name="Blueberry Swirl Cheesecake Roll" data-price="3.00" aria-label="Order Blueberry Swirl Cheesecake Roll">Order Now</button>
       </div>
 
@@ -205,7 +216,7 @@
         />
         <h3 id="mocha-brownie-icecream-cake-title">Mocha Brownie Icecream Cake</h3>
         <p>Layers of delicious brownie, coffee cream cheese, coffee ice cream, and whipped topping.</p>
-        <p><strong>$3.50</strong></p>
+        <p><strong>₱3.50</strong></p>
         <button class="order-btn" data-name="Mocha Brownie Icecream Cake" data-price="3.50" aria-label="Order Mocha Brownie Icecream Cake">Order Now</button>
       </div>
 
@@ -227,7 +238,7 @@
         />
         <h3 id="pistachio-cake-title">Pistachio Cake</h3>
         <p>A soft, moist crumb that actually tastes of pistachios.</p>
-        <p><strong>$4.50</strong></p>
+        <p><strong>₱4.50</strong></p>
         <button class="order-btn" data-name="Pistachio Cake" data-price="4.50" aria-label="Order Pistachio Cake">Order Now</button>
       </div>
 
@@ -238,7 +249,7 @@
         />
         <h3 id="tiramisu-cake-title">Tiramisu Cake</h3>
         <p>A soft, creamy, and rich, and it's got a toasty, warm flavor from the coffee and alcohol.</p>
-        <p><strong>$5.00</strong></p>
+        <p><strong>₱5.00</strong></p>
         <button class="order-btn" data-name="Tiramisu Cake" data-price="5.00" aria-label="Order Tiramisu Cake">Order Now</button>
       </div>
 
@@ -249,7 +260,7 @@
         />
         <h3 id="japanese-cake-roll-title">Japanese Cake Roll</h3>
         <p>Made with a light and airy chiffon cake base and filled with an even lighter whipped cream.</p>
-        <p><strong>$5.50</strong></p>
+        <p><strong>₱5.50</strong></p>
         <button class="order-btn" data-name="Japanese Cake Roll" data-price="5.50" aria-label="Japanese Cake Roll">Order Now</button>
       </div>
 
@@ -260,21 +271,9 @@
         />
         <h3 id="kababayan-bread-title">Kababayan Bread</h3>
         <p>a Filipino bread with a distinct salakot shape and yellow color.</p>
-        <p><strong>$6.00</strong></p>
+        <p><strong>₱6.00</strong></p>
         <button class="order-btn" data-name="Kababayan Bread" data-price="6.00" aria-label="Order Kababayan Bread">Order Now</button>
       </div>
-
-      <div class="card" role="region" aria-labelledby="kimberly-jane-ringal-title">
-        <img
-          src="images/k.png"
-          alt=""
-        />
-        <h3 id="kimberly-jane-ringal-title">Kimberly Jane Ringal</h3>
-        <p>The Ones I Once Loved. - Steve</p>
-        <p><strong>$143.00</strong></p>
-        <button class="order-btn" data-name="Kimberly Jane Ringal" data-price="143.00" aria-label="Kimberly Jane Ringal">Order Now</button>
-      </div>
-    </div>
 
   </section>
 
@@ -305,7 +304,7 @@
         >+63 987 654 3210</a
       >
     </p>
-    <p>Location: 456 Coffee Lane, Bean City</p>
+    <p>Location: 143 Tiramisu st, Aguinaldo Highway, Dasmariñas City, Cavite </p>
   </section>
 
   <footer role="contentinfo">
