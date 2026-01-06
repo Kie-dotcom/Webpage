@@ -342,3 +342,37 @@ footer {
     display: none; 
   }
 }
+
+.cart-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.cart-controls button {
+  background: #6f4e37;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cart-controls button:hover {
+  background: #3e2b22;
+}
+
+.decrement-btn {
+  background: #ff8c00;
+}
+
+.increment-btn {
+  background: #228b22;
+}
+
+.remove-btn {
+  background: #ff0000;
+}
+input:invalid {
+  border: 2px solid red;
+}
